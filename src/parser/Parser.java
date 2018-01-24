@@ -21,7 +21,7 @@ public class Parser {
     }
 
     private void run() throws IOException, ParserConfigurationException, SAXException {
-        ParserUtil.createBook(ParserUtil.getDocument(getContent(getContentPath())));
+        System.out.println(ParserUtil.createBook(ParserUtil.getDocument(getContent(getContentPath()))).toString());
     }
 
     private String getContentPath() throws IOException, ParserConfigurationException, SAXException {

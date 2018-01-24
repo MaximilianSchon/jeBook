@@ -18,4 +18,26 @@ public class Book {
     }
 
 
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public Manifest getManifest() {
+        return manifest;
+    }
+
+    public Spine getSpine() {
+        return spine;
+    }
+
+    public Guide getGuide() {
+        return guide;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("METADATA\n").append(metadata.toString() + "\n\n").append("MANIFEST\n").append(manifest.toString() + "\n\n");
+        return sb.toString();
+    }
 }

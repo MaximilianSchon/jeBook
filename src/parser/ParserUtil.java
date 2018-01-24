@@ -24,12 +24,9 @@ public class ParserUtil {
     public static String getContentPath(String xml) throws ParserConfigurationException, IOException, SAXException {
         NodeList nList = getDocument(xml).getElementsByTagName("rootfiles");
         Element eElement = (Element) nList.item(0);
-        return eElement.getElementsByTagName("rootfile")
-                .item(0).getAttributes()
-                .getNamedItem("full-path")
-                .toString()
-                .replace("full-path=", "")
-                .replaceAll("\"", "");
+        return eElement.getElementsByTagName("rootfile").
+                item(0).getAttributes()
+                .getNamedItem("full-path").getTextContent();
     }
 
     public static Document getDocument(String xml) throws ParserConfigurationException, IOException, SAXException {

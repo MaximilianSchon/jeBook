@@ -63,4 +63,28 @@ public class Metadata {
         }
         return Optional.empty();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Title: " + title).append("\nLanguage: " + language).append("\nID: " + identifier);
+        creator.ifPresent(s -> sb.append("Creator: " + s + "\n"));
+        contributor.ifPresent(s -> sb.append("Contributor " + s + "\n"));
+        publisher.ifPresent(s -> sb.append("Publisher " + s + "\n"));
+        description.ifPresent(s -> sb.append("Description " + s + "\n"));
+        date.ifPresent(s -> sb.append("Date " + s + "\n"));
+        type.ifPresent(s -> sb.append("Type " + s + "\n"));
+        format.ifPresent(s -> sb.append("Format " + s + "\n"));
+        source.ifPresent(s -> sb.append("Source " + s + "\n"));
+        relation.ifPresent(s -> sb.append("Relation " + s + "\n"));
+        coverage.ifPresent(s -> sb.append("Coverage " + s + "\n"));
+        rights.ifPresent(s -> sb.append("Rights " + s + "\n"));
+        subject.ifPresent(strings -> {
+            sb.append("Subject(s): ");
+            for (String s : strings) {
+                sb.append(s + ", ");
+            }
+        });
+        return sb.toString();
+    }
 }
