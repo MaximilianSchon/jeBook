@@ -1,4 +1,4 @@
-package ebook;
+package parser.ebook;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,7 +26,7 @@ public class Metadata {
     private Optional<String> coverImageId = Optional.empty();
 
 
-    public Metadata(Element metadata) {
+    Metadata(Element metadata) {
         title = getItem(metadata, "title");
         language = getItem(metadata, "language");
         identifier = getItem(metadata, "identifier");
@@ -59,26 +59,30 @@ public class Metadata {
         NodeList nl = metadata.getElementsByTagName("meta");
         for (int i = 0; i < nl.getLength(); i++) {
             if (nl.item(i).getAttributes().getNamedItem("name").getTextContent().equals("cover"))
-                return Optional.of(nl.item(i).getAttributes().getNamedItem("content").getTextContent());
+                return Optional.ofNullable(nl.item(i).getAttributes().getNamedItem("content").getTextContent());
         }
         return Optional.empty();
+    }
+
+    public String getCoverImageId() {
+        return coverImageId.orElse("USE-DEFAULT?");
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Title: " + title).append("\nLanguage: " + language).append("\nID: " + identifier);
+        sb.append("Title: " + title).append("\nLanguage: " + language).append("\nID: " + identifier + "\n");
         creator.ifPresent(s -> sb.append("Creator: " + s + "\n"));
-        contributor.ifPresent(s -> sb.append("Contributor " + s + "\n"));
-        publisher.ifPresent(s -> sb.append("Publisher " + s + "\n"));
-        description.ifPresent(s -> sb.append("Description " + s + "\n"));
-        date.ifPresent(s -> sb.append("Date " + s + "\n"));
-        type.ifPresent(s -> sb.append("Type " + s + "\n"));
-        format.ifPresent(s -> sb.append("Format " + s + "\n"));
-        source.ifPresent(s -> sb.append("Source " + s + "\n"));
-        relation.ifPresent(s -> sb.append("Relation " + s + "\n"));
-        coverage.ifPresent(s -> sb.append("Coverage " + s + "\n"));
-        rights.ifPresent(s -> sb.append("Rights " + s + "\n"));
+        contributor.ifPresent(s -> sb.append("Contributor: " + s + "\n"));
+        publisher.ifPresent(s -> sb.append("Publisher: " + s + "\n"));
+        description.ifPresent(s -> sb.append("Description: " + s + "\n"));
+        date.ifPresent(s -> sb.append("Date: " + s + "\n"));
+        type.ifPresent(s -> sb.append("Type: " + s + "\n"));
+        format.ifPresent(s -> sb.append("Format: " + s + "\n"));
+        source.ifPresent(s -> sb.append("Source: " + s + "\n"));
+        relation.ifPresent(s -> sb.append("Relation: " + s + "\n"));
+        coverage.ifPresent(s -> sb.append("Coverage: " + s + "\n"));
+        rights.ifPresent(s -> sb.append("Rights: " + s + "\n"));
         subject.ifPresent(strings -> {
             sb.append("Subject(s): ");
             for (String s : strings) {
