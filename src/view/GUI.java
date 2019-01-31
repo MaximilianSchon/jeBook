@@ -1,4 +1,4 @@
-package parser.view;
+package view;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -23,7 +23,9 @@ public class GUI extends Application {
     private WebView webView = new WebView();
     private EPubFile selectedFile;
 
-    public static final int BUTTON_PADDING = 10;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 500;
+    private static final int BUTTON_PADDING = 10;
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,11 +40,7 @@ public class GUI extends Application {
                 selectedFile = new EPubFile(fileChooser.showOpenDialog(primaryStage).getAbsolutePath());
                 page = 1;
                 webView.getEngine().loadContent(selectedFile.getPage(page));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
+            } catch (IOException | ParserConfigurationException | SAXException e) {
                 e.printStackTrace();
             }
 
@@ -51,13 +49,9 @@ public class GUI extends Application {
         Button next = new Button();
         next.setText("Next");
         next.setOnAction(event ->{
-            if (page < selectedFile.getSize())
+            if (page < selectedFile.getSize()) //TODO: Fix issues when no pages specified in TOC.
                 page++;
-            try {
-                webView.getEngine().loadContent(selectedFile.getPage(page));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            webView.getEngine().loadContent(selectedFile.getPage(page));
         });
 
         Button prev = new Button();
@@ -65,11 +59,7 @@ public class GUI extends Application {
         prev.setOnAction(event -> {
             if (page > 1)
                 page--;
-            try {
-                webView.getEngine().loadContent(selectedFile.getPage(page));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            webView.getEngine().loadContent(selectedFile.getPage(page));
         });
 
         BorderPane root = new BorderPane();
@@ -89,7 +79,7 @@ public class GUI extends Application {
         center.getChildren().add(webView);
         root.setRight(right);
         root.setCenter(center);
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
 
         scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
             center.setPrefWidth(primaryStage.getWidth()/2);

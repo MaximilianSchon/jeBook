@@ -1,4 +1,4 @@
-package parser.view;
+package view;
 
 import javafx.scene.web.WebView;
 

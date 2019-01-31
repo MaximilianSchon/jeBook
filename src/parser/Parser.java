@@ -15,10 +15,9 @@ public class Parser {
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         new Parser("test.epub").run();
-        new Parser("Extreme_Programming_Pocket_Guide.epub").run();
     }
 
     private void run() {
-        ePubFile.getPackage();
+        System.out.println(ePubFile.getPackage());
     }
 }

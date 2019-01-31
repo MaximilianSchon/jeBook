@@ -45,8 +45,15 @@ public class ToC {
         return pages;
     }
 
-    public String getPagePath(int nbr) {
-        return navMap.get(nbr).contentLocation;
+    public String getPage(int page) throws NoSuchPageException {
+        return pages.orElseThrow(() -> new NoSuchPageException("No such page")).get(page).contentLocation;
+    }
+
+    public String getChapter(int nbr) {
+        if (navMap.size() > nbr)
+            return navMap.get(nbr).contentLocation;
+        else
+            throw new Error("Maybe an exception?");
     }
 
     @Override
@@ -63,7 +70,7 @@ public class ToC {
     }
 
     public int getBookSize() {
-        return navMap.size();
+        return pages.orElse(navMap).size();
     }
 
     class ToCHead {
